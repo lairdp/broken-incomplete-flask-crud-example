@@ -24,6 +24,17 @@ def add():
   mysql.connection.commit()
 
   return '{"Result":"Success"}' # Really? maybe we should check!
+
+@app.route("/delete") #Delete Student
+def delete():
+  name = request.args.get('name')
+  email = request.args.get('email')
+  cur = mysql.connection.cursor() #create a connection to the SQL instance
+  s='''DELETE FROM students(studentName, email) VALUES('{}','{}');'''.format(name,email) # kludge - use stored proc or params
+  cur.execute(s)
+  mysql.connection.commit()
+
+  return '{"Result":"Success"}' # Really? maybe we should check!
   
 @app.route("/") #Default - Show Data
 def read(): # Name of the method
